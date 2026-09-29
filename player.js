@@ -17,15 +17,16 @@ function setPlaying(playing) {
   toggle.setAttribute("aria-pressed", String(playing));
   toggle.setAttribute("aria-label", playing ? "Поставить на паузу" : "Включить песню");
   icon.textContent = playing ? "Ⅱ" : "▶";
-  status.textContent = playing ? "Припев играет" : "Пауза";
 }
 
 async function tryAutoplay() {
   try {
     await audio.play();
-  } catch {
+  } catch (error) {
     setPlaying(false);
-    status.textContent = "Браузер ждёт вашего нажатия";
+    status.textContent = error.name === "NotAllowedError"
+      ? "Браузер ждёт вашего нажатия"
+      : "Песня временно недоступна";
   }
 }
 
@@ -36,16 +37,22 @@ toggle.addEventListener("click", async () => {
     try {
       await audio.play();
     } catch {
-      status.textContent = "Не удалось включить песню. Нажмите ещё раз.";
       setPlaying(false);
+      status.textContent = "Песня временно недоступна";
     }
   } else {
     audio.pause();
   }
 });
 
-audio.addEventListener("play", () => setPlaying(true));
-audio.addEventListener("pause", () => setPlaying(false));
+audio.addEventListener("play", () => {
+  setPlaying(true);
+  status.textContent = "Припев играет";
+});
+audio.addEventListener("pause", () => {
+  setPlaying(false);
+  status.textContent = "Пауза";
+});
 audio.addEventListener("loadedmetadata", () => {
   progress.max = String(audio.duration || 42);
   duration.textContent = formatTime(audio.duration || 42);

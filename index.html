@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#120e12">
+  <title>Тату на твоём теле</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="scene">
+    <img class="scene__photo" src="img/photo.webp" alt="Личная фотография">
+    <div class="scene__shade" aria-hidden="true"></div>
+
+    <section class="player" id="player" aria-label="Музыкальный плеер">
+      <div class="player__copy">
+        <p class="player__eyebrow">Jah Khalib</p>
+        <h1>Тату на твоём теле</h1>
+      </div>
+
+      <div class="player__controls">
+        <button class="player__toggle" id="play-toggle" type="button" aria-label="Включить песню" aria-pressed="false">
+          <span class="player__icon" aria-hidden="true">▶</span>
+        </button>
+        <div class="player__timeline">
+          <input id="progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Позиция в песне">
+          <div class="player__time" aria-live="off">
+            <span id="elapsed">0:00</span>
+            <span id="duration">0:42</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="player__status" id="status" aria-live="polite">Нажмите, чтобы включить припев</p>
+      <audio id="audio" src="audio/chorus.mp3" preload="metadata"></audio>
+    </section>
+  </main>
+  <script src="player.js"></script>
+</body>
+</html>
